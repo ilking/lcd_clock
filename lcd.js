@@ -1,7 +1,6 @@
 const moment = require('moment');
 const LCD = require('raspberrypi-liquid-crystal');
 const Hebcal = require('hebcal');
-const encoding = require('encoding');
 
 const [lattitude, longitude] = [41.849648, -71.395652];
 
@@ -11,16 +10,11 @@ function init() {
   lcd.beginSync();
   lcd.clearSync();
 
-  Hebcal.defaultLocation = [41.849648, -71.395652];
-}
-
-function setFourthLine() {
-  const currentDate = moment();
-  const hebDate = new Hebcal.HDate(moment().toDate());
+  Hebcal.HDate.defaultLocation = [41.849648, -71.395652];
 }
 
 function writeDateLines() {
-  const hebDate = new Hebcal.HDate(moment().toDate());
+  const hebDate = new Hebcal.HDate();
 
   lcd.printLineSync(0, `${moment().format('hh:mm:ss A')} `);
   lcd.printLineSync(1, moment().format('ddd MMM Do, YYYY'));
