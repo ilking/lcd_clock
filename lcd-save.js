@@ -5,6 +5,9 @@ const player = require('play-sound')((opts = {}));
 const cron = require('node-cron');
 const fedHolidays = require('@18f/us-federal-holidays');
 
+const HebCalWrapper = require('./HebCalWrapper.mjs');
+const Runner = require('./Runner.mjs');
+
 const AUDIO_FILE_BASE = '/home/pi/clock_scripts/audios';
 const WAKE_UP_TIME = '51 22 * * 1-5';
 const HEBCAL_COORDS = [41.849648, -71.395652];
@@ -16,11 +19,6 @@ const fed_holiday_options = {
 };
 
 const lcd = new LCD(1, 0x27, 20, 4);
-
-const audio_files = [
-  { name: 'Meri King', path: `${AUDIO_FILE_BASE}/Meri_King.mp4` },
-  { name: 'Ed King', path: `${AUDIO_FILE_BASE}/Ed_King.mp4` },
-];
 
 function init() {
   lcd.beginSync();
@@ -58,16 +56,22 @@ function handleFourthLine() {
   });
 }
 
+// function main() {
+//   init();
+
+//   cron.schedule(WAKE_UP_TIME, () => {
+//     handleFourthLine();
+//   });
+
+//   setInterval(() => {
+//     writeDateLines();
+//   }, 1000);
+// }
+
 function main() {
-  init();
+  const runner = new Runner();
 
-  cron.schedule(WAKE_UP_TIME, () => {
-    handleFourthLine();
-  });
-
-  setInterval(() => {
-    writeDateLines();
-  }, 1000);
+  runner.run();
 }
 
 main();
