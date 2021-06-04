@@ -43,8 +43,8 @@ export default class Runner {
   }
 
   run() {
-    // cron.schedule(WAKE_UP_TIME, () => this.handleFourthLine());
-    this.handleFourthLine();
+    cron.schedule(WAKE_UP_TIME, () => this.handleFourthLine());
+    // this.handleFourthLine();
     cron.schedule(MIDNIGHT, () => this.clearFourthLine());
 
     setInterval(() => {
