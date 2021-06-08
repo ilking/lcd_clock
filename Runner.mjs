@@ -17,9 +17,11 @@ export default class Runner {
   }
 
   writeStaticLines() {
+    const thirdLine = this.hebCal.getHolidayName() || this.hebCal.getHebDateString().padStart(20);
+
     this.lcd.writeLine(LINE.ONE, `${moment().format('hh:mm:ss A')} `);
     this.lcd.writeLine(LINE.TWO, moment().format('ddd MMM Do, YYYY'));
-    this.lcd.writeLine(LINE.THREE, this.hebCal.getHebDate().padStart(20));
+    this.lcd.writeLine(LINE.THREE, thirdLine);
   }
 
   clearFourthLine() {
@@ -27,6 +29,13 @@ export default class Runner {
   }
 
   handleFourthLine() {
+    const jewishCandle = this.hebCal.getTodaysCandle();
+    if (jewishCandle) {
+      this.lcd.writeLine(LINE.FOUR, jewishCandle);
+
+      return;
+    }
+
     const fedHolidayName = this.fedHoliday.getCurrentHoliday();
     if (fedHolidayName) {
       this.lcd.writeLine(LINE.FOUR, fedHolidayName);
