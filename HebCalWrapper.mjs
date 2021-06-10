@@ -11,7 +11,7 @@ export default class HebCalWrapper {
   constructor() {}
 
   getHebDate() {
-    return new Hebcal.HDate(moment('2021-09-07').toDate());
+    return new Hebcal.HDate(moment().toDate());
   }
 
   getHebDateString() {
