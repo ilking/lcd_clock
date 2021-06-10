@@ -5,8 +5,8 @@ import cron from 'node-cron';
 import AudioManager from './AudioManager.mjs';
 import FedHolidayWrapper from './FedHolidayWrapper.mjs';
 
-const WAKE_UP_TIME = '20 7 * * 1-5';
-const MIDNIGHT = '0 0 * * *';
+const WAKE_UP_TIME = '34 20 * * 1-5';
+const MIDNIGHT = '35 20 * * *';
 
 export default class Runner {
   constructor() {
@@ -17,10 +17,11 @@ export default class Runner {
   }
 
   writeStaticLines() {
+    const secondLine = this.fedHoliday.getCurrentHoliday() || moment().format('ddd MMM Do, YYYY');
     const thirdLine = this.hebCal.getHolidayName() || this.hebCal.getHebDateString().padStart(20);
 
     this.lcd.writeLine(LINE.ONE, `${moment().format('hh:mm:ss A')} `);
-    this.lcd.writeLine(LINE.TWO, moment().format('ddd MMM Do, YYYY'));
+    this.lcd.writeLine(LINE.TWO, secondLine);
     this.lcd.writeLine(LINE.THREE, thirdLine);
   }
 
@@ -36,10 +37,7 @@ export default class Runner {
       return;
     }
 
-    const fedHolidayName = this.fedHoliday.getCurrentHoliday();
-    if (fedHolidayName) {
-      this.lcd.writeLine(LINE.FOUR, fedHolidayName);
-
+    if (this.fedHoliday.getCurrentHoliday()) {
       return;
     }
 
@@ -58,6 +56,6 @@ export default class Runner {
 
     setInterval(() => {
       this.writeStaticLines();
-    }, 1000);
+    }, 500);
   }
 }

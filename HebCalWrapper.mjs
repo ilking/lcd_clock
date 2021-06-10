@@ -11,7 +11,7 @@ export default class HebCalWrapper {
   constructor() {}
 
   getHebDate() {
-    return new Hebcal.HDate();
+    return new Hebcal.HDate(moment('2021-09-07').toDate());
   }
 
   getHebDateString() {
@@ -31,7 +31,18 @@ export default class HebCalWrapper {
   getHolidayName() {
     const holiday = this.getHoliday();
 
-    return holiday?.getDesc() || null;
+    if (!holiday) {
+      return null;
+    }
+
+    const rawDesc = holiday.getDesc();
+    const monthName = this.getHebDate().getMonthName();
+
+    if (/rosh chodesh [1-2]/i.test(rawDesc)) {
+      return `R"C ${monthName}`;
+    }
+
+    return rawDesc;
   }
 
   isYuntif() {

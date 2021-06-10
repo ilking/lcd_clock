@@ -2,8 +2,17 @@ import Player from 'play-sound';
 
 const AUDIO_FILE_BASE = '/home/pi/clock_scripts/audios';
 const audio_files = [
-  { name: 'Meri King', path: `${AUDIO_FILE_BASE}/Meri_King.mp4` },
+  { name: 'Abba Groskin', path: `${AUDIO_FILE_BASE}/AbbaGroskin.mp3` },
+  { name: 'Akiva Groskin', path: `${AUDIO_FILE_BASE}/Akiva.mp4` },
+  { name: 'Becca Levitan', path: `${AUDIO_FILE_BASE}/BeccaLevitan.mp3` },
   { name: 'Ed King', path: `${AUDIO_FILE_BASE}/Ed_King.mp4` },
+  { name: 'Elchanan Groskin', path: `${AUDIO_FILE_BASE}/Elchanan.mp3` },
+  { name: 'Elimelech Groskin', path: `${AUDIO_FILE_BASE}/Elimelech.mp3` },
+  { name: 'Ezra Groskin', path: `${AUDIO_FILE_BASE}/EzraGroskin.mp3` },
+  { name: 'Meri King', path: `${AUDIO_FILE_BASE}/Meri_King.mp4` },
+  { name: 'Shira Groskin', path: `${AUDIO_FILE_BASE}/ShiraGroskin.mp3` },
+  { name: 'Sharon Groskin', path: `${AUDIO_FILE_BASE}/SharonGroskin.mp3` },
+  { name: 'Yanai Groskin', path: `${AUDIO_FILE_BASE}/Yanai.mp4` },
 ];
 
 export default class AudioManager {
@@ -15,6 +24,7 @@ export default class AudioManager {
 
   queueAudio() {
     this.queuedAudio = audio_files[Math.floor(Math.random() * audio_files.length)];
+    // this.queuedAudio = audio_files[10];
   }
 
   isReady() {
