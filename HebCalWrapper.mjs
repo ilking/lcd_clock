@@ -11,7 +11,13 @@ export default class HebCalWrapper {
   constructor() {}
 
   getHebDate() {
-    return new Hebcal.HDate(moment().toDate());
+    const hebDate = new Hebcal.HDate(moment().toDate());
+
+    if (moment().isSameOrAfter(hebDate.sunset(), 'second')) {
+      return hebDate.next();
+    }
+
+    return hebDate;
   }
 
   getHebDateString() {
@@ -39,7 +45,7 @@ export default class HebCalWrapper {
     const monthName = this.getHebDate().getMonthName();
 
     if (/rosh chodesh [1-2]/i.test(rawDesc)) {
-      return `R"C ${monthName}`;
+      return `R"C ${monthName} ${rawDesc.includes('1') ? '1' : '2'}`;
     }
 
     return rawDesc;
