@@ -2,7 +2,7 @@ import Player from 'play-sound';
 
 const AUDIO_FILE_BASE = '/home/pi/clock_scripts/audios';
 const audio_files = [
-  { name: 'Abba Groskin', path: `${AUDIO_FILE_BASE}/AbbaGroskin.mp3` },
+  { name: 'Aba Groskin', path: `${AUDIO_FILE_BASE}/AbbaGroskin.mp3` },
   { name: 'Adir King', path: `${AUDIO_FILE_BASE}/AdirKing.mp3` },
   { name: 'Akiva Groskin', path: `${AUDIO_FILE_BASE}/Akiva.mp4` },
   { name: 'Ari King', path: `${AUDIO_FILE_BASE}/AriKing.mp3` },
@@ -29,7 +29,7 @@ export default class AudioManager {
 
   queueAudio() {
     this.queuedAudio = audio_files[Math.floor(Math.random() * audio_files.length)];
-    // this.queuedAudio = audio_files[10];
+    // this.queuedAudio = audio_files[3];
   }
 
   isReady() {
