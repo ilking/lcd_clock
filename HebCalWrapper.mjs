@@ -35,20 +35,7 @@ export default class HebCalWrapper {
   }
 
   getHolidayName() {
-    const holiday = this.getHoliday();
-
-    if (!holiday) {
-      return null;
-    }
-
-    const rawDesc = holiday.getDesc();
-    const monthName = this.getHebDate().getMonthName();
-
-    if (/rosh chodesh [1-2]/i.test(rawDesc)) {
-      return `R"C ${monthName} ${rawDesc.includes('1') ? '1' : '2'}`;
-    }
-
-    return rawDesc;
+    return this.getHoliday()?.getDesc() || null;
   }
 
   isYuntif() {
