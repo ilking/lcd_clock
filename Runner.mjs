@@ -5,8 +5,8 @@ import cron from 'node-cron';
 import AudioManager from './AudioManager.mjs';
 import FedHolidayWrapper from './FedHolidayWrapper.mjs';
 
-const WAKE_UP_TIME = '34 20 * * 1-5';
-const MIDNIGHT = '35 20 * * *';
+const WAKE_UP_TIME = '20 7 * * 1-5';
+const RESET_TIME = '0 8 * * *';
 
 export default class Runner {
   constructor() {
@@ -25,19 +25,19 @@ export default class Runner {
     this.lcd.writeLine(LINE.THREE, thirdLine);
   }
 
-  clearFourthLine() {
-    this.lcd.writeLine(LINE.FOUR, ''.padStart(20));
-  }
-
   handleFourthLine() {
+    this.lcd.writeLine(LINE.FOUR, ''.padStart(20));
+
     const jewishCandle = this.hebCal.getTodaysCandle();
     if (jewishCandle) {
       this.lcd.writeLine(LINE.FOUR, jewishCandle);
 
       return;
     }
+  }
 
-    if (this.fedHoliday.getCurrentHoliday()) {
+  runWakeUpLine() {
+    if (this.fedHoliday.getCurrentHoliday() || this.hebCal.isYuntif()) {
       return;
     }
 
@@ -46,13 +46,12 @@ export default class Runner {
     const greeter = this.audioManager.getAudioName();
     this.lcd.writeLine(LINE.FOUR, `From ${greeter}`);
 
-    this.audioManager.playAudio();
+    // this.audioManager.playAudio();
   }
 
   run() {
-    cron.schedule(WAKE_UP_TIME, () => this.handleFourthLine());
-    // this.handleFourthLine();
-    cron.schedule(MIDNIGHT, () => this.clearFourthLine());
+    cron.schedule(WAKE_UP_TIME, () => this.runWakeUpLine());
+    cron.schedule(RESET_TIME, () => this.handleFourthLine());
 
     setInterval(() => {
       this.writeStaticLines();

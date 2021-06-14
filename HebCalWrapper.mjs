@@ -7,6 +7,8 @@ const HEBCAL_COORDS = [41.849648, -71.395652];
 Hebcal.HDate.defaultLocation = HEBCAL_COORDS;
 Hebcal.holidays.Event.havdalah = 52;
 
+// const test_date = '2021-06-18T11:30:00';
+
 export default class HebCalWrapper {
   constructor() {}
 
