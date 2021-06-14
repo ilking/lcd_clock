@@ -41,6 +41,7 @@ export default class HebCalWrapper {
   }
 
   isYuntif() {
+    // TODO: This needs to be better. Friday will never run.
     const holiday = this.getHoliday();
 
     if (!holiday) {
@@ -53,9 +54,10 @@ export default class HebCalWrapper {
   getTodaysCandle() {
     const hebrewDate = this.getHebDate();
     const candleDate = hebrewDate.candleLighting() || hebrewDate.havdalah();
+    const shkiah = this.getHebDate().sunset();
 
     if (!candleDate) {
-      return null;
+      return `Shkiah: ${moment(shkiah).format('h:mm a')}`;
     }
 
     const formatted = moment(candleDate).format('h:mm a');

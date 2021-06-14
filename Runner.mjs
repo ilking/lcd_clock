@@ -8,32 +8,44 @@ import FedHolidayWrapper from './FedHolidayWrapper.mjs';
 const WAKE_UP_TIME = '20 7 * * 1-5';
 const RESET_TIME = '0 8 * * *';
 
+const FourthLineMode = {
+  ALARM: 0,
+  DAILY: 1,
+};
+
 export default class Runner {
   constructor() {
     this.hebCal = new HebCalWrapper();
     this.lcd = new LcdWrapper();
     this.audioManager = new AudioManager();
     this.fedHoliday = new FedHolidayWrapper();
+    this.fourthLineMode = FourthLineMode.DAILY;
   }
 
   writeStaticLines() {
+    this.lcd.writeLine(LINE.ONE, `${moment().format('hh:mm:ss A')} `);
+
     const secondLine = this.fedHoliday.getCurrentHoliday() || moment().format('ddd MMM Do, YYYY');
     const thirdLine = this.hebCal.getHolidayName() || this.hebCal.getHebDateString().padStart(20);
 
-    this.lcd.writeLine(LINE.ONE, `${moment().format('hh:mm:ss A')} `);
     this.lcd.writeLine(LINE.TWO, secondLine);
     this.lcd.writeLine(LINE.THREE, thirdLine);
-  }
 
-  handleFourthLine() {
-    this.lcd.writeLine(LINE.FOUR, ''.padStart(20));
-
-    const jewishCandle = this.hebCal.getTodaysCandle();
-    if (jewishCandle) {
-      this.lcd.writeLine(LINE.FOUR, jewishCandle);
-
+    if (this.fourthLineMode === FourthLineMode.ALARM) {
       return;
     }
+
+    this.lcd.writeLine(LINE.FOUR, this.hebCal.getTodaysCandle());
+  }
+
+  clearFourthLine() {
+    this.lcd.writeLine(LINE.FOUR, ''.padStart(20));
+  }
+
+  releaseFourthLine() {
+    this.clearFourthLine();
+
+    this.fourthLineMode = FourthLineMOde.DAILY;
   }
 
   runWakeUpLine() {
@@ -41,20 +53,24 @@ export default class Runner {
       return;
     }
 
+    this.fourthLineMode = FourthLineMode.ALARM;
+
     this.audioManager.queueAudio();
+
+    this.clearFourthLine();
 
     const greeter = this.audioManager.getAudioName();
     this.lcd.writeLine(LINE.FOUR, `From ${greeter}`);
 
-    // this.audioManager.playAudio();
+    this.audioManager.playAudio();
   }
 
   run() {
     cron.schedule(WAKE_UP_TIME, () => this.runWakeUpLine());
-    cron.schedule(RESET_TIME, () => this.handleFourthLine());
+    cron.schedule(RESET_TIME, () => this.releaseFourthLine());
 
     setInterval(() => {
       this.writeStaticLines();
-    }, 500);
+    }, 1000);
   }
 }
