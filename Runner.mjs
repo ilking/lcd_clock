@@ -5,7 +5,7 @@ import cron from 'node-cron';
 import AudioManager from './AudioManager.mjs';
 import FedHolidayWrapper from './FedHolidayWrapper.mjs';
 
-const WAKE_UP_TIME = '20 7 * * 1-5';
+const WAKE_UP_TIME = '5 7 * * 1-5';
 const RESET_TIME = '0 8 * * *';
 
 const FourthLineMode = {
@@ -19,6 +19,7 @@ export default class Runner {
     this.lcd = new LcdWrapper();
     this.audioManager = new AudioManager();
     this.fedHoliday = new FedHolidayWrapper();
+
     this.fourthLineMode = FourthLineMode.DAILY;
   }
 
@@ -45,7 +46,7 @@ export default class Runner {
   releaseFourthLine() {
     this.clearFourthLine();
 
-    this.fourthLineMode = FourthLineMOde.DAILY;
+    this.fourthLineMode = FourthLineMode.DAILY;
   }
 
   runWakeUpLine() {
@@ -62,7 +63,7 @@ export default class Runner {
     const greeter = this.audioManager.getAudioName();
     this.lcd.writeLine(LINE.FOUR, `From ${greeter}`);
 
-    this.audioManager.playAudio();
+    // this.audioManager.playAudio();
   }
 
   run() {
