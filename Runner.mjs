@@ -63,7 +63,7 @@ export default class Runner {
     const greeter = this.audioManager.getAudioName();
     this.lcd.writeLine(LINE.FOUR, `From ${greeter}`);
 
-    // this.audioManager.playAudio();
+    this.audioManager.playAudio();
   }
 
   run() {
