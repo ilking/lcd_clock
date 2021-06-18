@@ -30,7 +30,7 @@ export default class AudioManager {
 
   queueAudio() {
     this.queuedAudio = audio_files[Math.floor(Math.random() * audio_files.length)];
-    // this.queuedAudio = audio_files[3];
+    // this.queuedAudio = audio_files[1];
   }
 
   isReady() {
@@ -48,7 +48,7 @@ export default class AudioManager {
 
     const { path } = this.queuedAudio;
 
-    this.player.play(starterAudio, err => {
+    this.player.play(`${AUDIO_FILE_BASE}/${starterAudio}`, err => {
       if (err) {
         console.error(err);
       }

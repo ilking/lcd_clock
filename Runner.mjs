@@ -6,7 +6,7 @@ import AudioManager from './AudioManager.mjs';
 import FedHolidayWrapper from './FedHolidayWrapper.mjs';
 
 const WAKE_UP_TIME = '5 7 * * 1-5';
-const RESET_TIME = '0 8 * * *';
+const RESET_TIME = '6 7 * * *';
 
 const FourthLineMode = {
   ALARM: 0,
@@ -36,7 +36,7 @@ export default class Runner {
       return;
     }
 
-    this.lcd.writeLine(LINE.FOUR, this.hebCal.getTodaysCandle());
+    this.lcd.writeLine(LINE.FOUR, this.hebCal.getTodaysCandle().padEnd(20, ''));
   }
 
   clearFourthLine() {
@@ -47,12 +47,16 @@ export default class Runner {
     this.clearFourthLine();
 
     this.fourthLineMode = FourthLineMode.DAILY;
+
+    this.lcd.displayOff();
   }
 
   runWakeUpLine() {
     if (this.fedHoliday.getCurrentHoliday() || this.hebCal.isYuntif()) {
       return;
     }
+
+    this.lcd.displayOn();
 
     this.fourthLineMode = FourthLineMode.ALARM;
 
@@ -67,6 +71,7 @@ export default class Runner {
   }
 
   run() {
+    this.lcd.displayOff();
     cron.schedule(WAKE_UP_TIME, () => this.runWakeUpLine());
     cron.schedule(RESET_TIME, () => this.releaseFourthLine());
 

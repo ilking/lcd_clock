@@ -18,4 +18,16 @@ export default class LcdWrapper {
   writeLine(line, message) {
     this.lcd.printLineSync(line, message);
   }
+
+  clearLine(line) {
+    this.lcd.writeLine(line, ''.padStart(20));
+  }
+
+  displayOff() {
+    this.lcd.noDisplaySync();
+  }
+
+  displayOn() {
+    this.lcd.displaySync();
+  }
 }
