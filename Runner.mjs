@@ -6,7 +6,8 @@ import AudioManager from './AudioManager.mjs';
 import FedHolidayWrapper from './FedHolidayWrapper.mjs';
 
 const WAKE_UP_TIME = '5 7 * * 1-5';
-const RESET_TIME = '0 9 * * *';
+const RESET_TIME = '0 8 * * *';
+const SCREEN_OFF_TIME = '0 9 * * *';
 
 const FourthLineMode = {
   ALARM: 0,
@@ -47,7 +48,9 @@ export default class Runner {
     this.clearFourthLine();
 
     this.fourthLineMode = FourthLineMode.DAILY;
+  }
 
+  screenOff() {
     this.lcd.displayOff();
   }
 
@@ -74,6 +77,7 @@ export default class Runner {
     this.lcd.displayOff();
     cron.schedule(WAKE_UP_TIME, () => this.runWakeUpLine());
     cron.schedule(RESET_TIME, () => this.releaseFourthLine());
+    cron.schedule(SCREEN_OFF_TIME, () => this.screenOff());
 
     setInterval(() => {
       this.writeStaticLines();
