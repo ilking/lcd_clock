@@ -6,7 +6,7 @@ import AudioManager from './AudioManager.mjs';
 import FedHolidayWrapper from './FedHolidayWrapper.mjs';
 
 const WAKE_UP_TIME = '5 7 * * 1-5';
-const RESET_TIME = '25 7 * * *';
+const RESET_TIME = '0 9 * * *';
 
 const FourthLineMode = {
   ALARM: 0,
