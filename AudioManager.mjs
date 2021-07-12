@@ -61,7 +61,7 @@ export default class AudioManager {
           console.error(err);
         }
       });
-    }, 15000);
+    }, 16000);
 
     this.queuedAudio = null;
   }
