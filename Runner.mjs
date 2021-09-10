@@ -74,7 +74,7 @@ export default class Runner {
   }
 
   run() {
-    this.lcd.displayOff();
+    this.screenOff();
     cron.schedule(WAKE_UP_TIME, () => this.runWakeUpLine());
     cron.schedule(RESET_TIME, () => this.releaseFourthLine());
     cron.schedule(SCREEN_OFF_TIME, () => this.screenOff());
