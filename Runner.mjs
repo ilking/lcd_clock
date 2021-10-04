@@ -5,9 +5,9 @@ import cron from 'node-cron';
 import AudioManager from './AudioManager.mjs';
 import FedHolidayWrapper from './FedHolidayWrapper.mjs';
 
-const WAKE_UP_TIME = '5 7 * * 1-5';
-const RESET_TIME = '15 7 * * *';
-const SCREEN_OFF_TIME = '25 7 * * *';
+const WAKE_UP_TIME = '35 6 * * 1-5';
+const RESET_TIME = '45 6 * * *';
+const SCREEN_OFF_TIME = '5 7 * * *';
 
 const FourthLineMode = {
   ALARM: 0,
