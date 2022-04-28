@@ -56,6 +56,7 @@ export default class Runner {
 
   runWakeUpLine() {
     if (this.fedHoliday.getCurrentHoliday() || this.hebCal.isYuntif()) {
+      console.log("Skipping alarm because holiday or yuntuf");
       return;
     }
 

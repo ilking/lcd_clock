@@ -12,7 +12,7 @@ const audio_files = [
   { name: 'Elchanan Groskin', path: `Elchanan.mp3` },
   { name: 'Elimelech Groskin', path: `Elimelech.mp3` },
   { name: 'Ita Fiet', path: 'ItaFiet.mp3' },
-  // { name: 'Ezra Groskin', path: `EzraGroskin.mp3` },
+  { name: 'Ezra Groskin', path: `EzraGroskin.mp3` },
   { name: 'Melissa Czinn', path: 'Melissa.mp3' },
   { name: 'Meri King', path: `Meri_King.mp4` },
   { name: 'Nachi King', path: `NachiKing.mp3` },
